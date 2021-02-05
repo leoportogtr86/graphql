@@ -2,10 +2,18 @@ const { ApolloServer, gql } = require('apollo-server')
 
 const typeDefs = gql`
 
+    type Pessoa {
+
+        nome: String
+        idade: Int
+        profissao: String
+    }
+
     type Query {
 
         ola: String
         nome: String
+        pessoa: Pessoa
     }
 
 
@@ -23,6 +31,16 @@ const resolvers = {
         nome() {
 
             return 'Leonardo Porto'
+        },
+
+        pessoa() {
+
+            return {
+
+                nome: "Kiko Loureiro",
+                idade: 45,
+                profissao: "músico"
+            }
         }
     }
 

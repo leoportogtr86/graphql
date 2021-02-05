@@ -1,5 +1,32 @@
 const { ApolloServer, gql } = require('apollo-server')
 
+
+
+
+
+
+
+const people = [
+
+    {
+        nome: 'Juca',
+        idade: 5
+    },
+
+    {
+        nome: 'Ana',
+        idade: 12
+    },
+
+    {
+        nome: 'Breno',
+        idade: 18
+    },
+
+]
+
+
+
 const typeDefs = gql`
 
 
@@ -40,6 +67,7 @@ const typeDefs = gql`
         carro: Carro
         produtoEmDestaque: Produto
         linguagens: [String]
+        pessoas: [Pessoa]
     }
 
 
@@ -115,6 +143,11 @@ const resolvers = {
         linguagens() {
 
             return ['java', 'javascript', 'c', 'c++', 'c#', 'python', 'ruby', 'scala', 'golang']
+        },
+
+        pessoas() {
+
+            return people
         }
     }
 

@@ -39,6 +39,7 @@ const typeDefs = gql`
         pessoa: Pessoa
         carro: Carro
         produtoEmDestaque: Produto
+        linguagens: [String]
     }
 
 
@@ -109,6 +110,11 @@ const resolvers = {
                 preco: 15000,
                 desconto: 10
             }
+        },
+
+        linguagens() {
+
+            return ['java', 'javascript', 'c', 'c++', 'c#', 'python', 'ruby', 'scala', 'golang']
         }
     }
 

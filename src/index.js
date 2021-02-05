@@ -1,10 +1,11 @@
-const {ApolloServer, gql} = require('apollo-server')
+const { ApolloServer, gql } = require('apollo-server')
 
 const typeDefs = gql`
 
     type Query {
 
         ola: String
+        nome: String
     }
 
 
@@ -12,11 +13,16 @@ const typeDefs = gql`
 
 const resolvers = {
 
-    Query:{
+    Query: {
 
-        ola(){
+        ola() {
 
             return 'Hello graphql'
+        },
+
+        nome() {
+
+            return 'Leonardo Porto'
         }
     }
 
@@ -30,7 +36,7 @@ const server = new ApolloServer({
     resolvers
 })
 
-server.listen().then(({url})=>{
+server.listen().then(({ url }) => {
 
     console.log('Online em ' + url)
 })

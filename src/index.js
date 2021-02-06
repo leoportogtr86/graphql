@@ -1,33 +1,60 @@
 const { ApolloServer, gql } = require('apollo-server')
 
+const people = require('../models/people')
+const guitars = require('../models/guitarras')
+const cars = require('../models/car')
+const vendas = require('../models/venda')
 
-
-
-
-
-
-const people = [
-
-    {
-        nome: 'Juca',
-        idade: 5
-    },
-
-    {
-        nome: 'Ana',
-        idade: 12
-    },
-
-    {
-        nome: 'Breno',
-        idade: 18
-    },
-
-]
 
 
 
 const typeDefs = gql`
+
+
+
+    type Query {
+        
+        ola: String
+        nome: String
+        pessoa: Pessoa
+        carro: Carro
+        produtoEmDestaque: Produto
+        linguagens: [String]
+        pessoas: [Pessoa]
+        guitarra: [Guitarra]
+        carros: [Carro]
+        escala: Escala
+        venda(id: Int): Venda
+    }
+
+    type Venda {
+
+        id: Int
+        produto: String
+        nome_vendedor: String
+        valor: Float
+        data: String
+    }
+
+
+    type Escala {
+
+        tonica: String
+        segunda: String
+        terca: String
+        quarta: String
+        quinta: String
+        sexta: String
+        setima: String
+        campoHarmonico: String
+    }
+
+    type Guitarra {
+
+        marca: String
+        modelo: String
+        preco: Float
+    }
 
 
 
@@ -59,22 +86,25 @@ const typeDefs = gql`
 
 
 
-    type Query {
-
-        ola: String
-        nome: String
-        pessoa: Pessoa
-        carro: Carro
-        produtoEmDestaque: Produto
-        linguagens: [String]
-        pessoas: [Pessoa]
-    }
 
 
 
 `
 
 const resolvers = {
+
+
+
+
+    Escala: {
+
+        campoHarmonico(e) {
+
+            return 'C7M Dm7 Em7 F7M G7 Am7 Bm7(b5)'
+
+
+        }
+    },
 
     Produto: {
 
@@ -97,6 +127,20 @@ const resolvers = {
     },
 
     Query: {
+
+        escala() {
+
+            return {
+
+                tonica: 'C',
+                segunda: 'D',
+                terca: 'E',
+                quarta: 'F',
+                quinta: 'G',
+                sexta: 'A',
+                setima: 'B'
+            }
+        },
 
         ola() {
 
@@ -148,7 +192,27 @@ const resolvers = {
         pessoas() {
 
             return people
+        },
+
+        guitarra() {
+
+            return guitars
+        },
+
+        carros() {
+
+            return cars
+        },
+
+        venda(_, args) {
+
+            const escolhido = vendas.filter(e => e.id == args.id)
+
+            return escolhido[0]
+
+
         }
+
     }
 
 

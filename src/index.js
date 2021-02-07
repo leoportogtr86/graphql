@@ -5,7 +5,7 @@ const guitars = require('./models/guitarras')
 const cars = require('./models/car')
 const vendas = require('./models/venda')
 const clients = require('./models/clientes')
-
+const instrumentos_dados = require('./models/instrumento')
 
 
 const typeDefs = gql`
@@ -26,6 +26,15 @@ const typeDefs = gql`
         escala: Escala
         venda(id: Int): Venda
         cliente(nome: String): Cliente
+        instrumento(nome: String): Instrumento
+    }
+
+    type Instrumento {
+
+        nome: String
+        tipo: String
+        marca: String
+        modelo: String
     }
 
     type Venda {
@@ -225,6 +234,15 @@ const resolvers = {
         cliente(_, { nome }) {
 
             let data = clients.filter(e => e.nome == nome)
+
+            return data[0]
+
+
+        },
+
+        instrumento(_, { nome }) {
+
+            let data = instrumentos_dados.filter(e => e.nome == nome)
 
             return data[0]
 

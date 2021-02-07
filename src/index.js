@@ -1,10 +1,10 @@
 const { ApolloServer, gql } = require('apollo-server')
 
-const people = require('../models/people')
-const guitars = require('../models/guitarras')
-const cars = require('../models/car')
-const vendas = require('../models/venda')
-
+const people = require('./models/people')
+const guitars = require('./models/guitarras')
+const cars = require('./models/car')
+const vendas = require('./models/venda')
+const clients = require('./models/clientes')
 
 
 
@@ -25,6 +25,7 @@ const typeDefs = gql`
         carros: [Carro]
         escala: Escala
         venda(id: Int): Venda
+        cliente(nome: String): Cliente
     }
 
     type Venda {
@@ -81,6 +82,14 @@ const typeDefs = gql`
         nome: String
         idade: Int
         profissao: String
+    }
+
+    type Cliente {
+
+        nome: String
+        idade: Int
+        descricaoProjeto: String
+        valorConsultoria: Float
     }
 
 
@@ -209,6 +218,15 @@ const resolvers = {
             const escolhido = vendas.filter(e => e.id == args.id)
 
             return escolhido[0]
+
+
+        },
+
+        cliente(_, { nome }) {
+
+            let data = clients.filter(e => e.nome == nome)
+
+            return data[0]
 
 
         }
